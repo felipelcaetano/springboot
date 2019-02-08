@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot - Nova Instituição</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div th:replace="fragmentos/fragmentos :: header"></div>
+
+    <div class="container">
+        <h2>Criação de nova instituição</h2>
+        <form class="form-horizontal" action="/instituicoes/inserir" method="post" th:object="${instituicao}">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="txt-nome">Nome da Instituição:</label>
+                    <input type="text" class="form-control" id="txt-nome" th:field="*{nome}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="txt-endereço">Endereço da Instituição:</label>
+                    <input type="text" class="form-control" id="txt-endereço" th:field="*{endereco}"/>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar!</button>
+        </form>
+    </div>
+
+    <div th:replace="fragmentos/fragmentos :: footer"></div>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+</body>
+</html>

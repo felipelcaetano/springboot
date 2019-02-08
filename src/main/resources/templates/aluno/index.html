@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot - Alunos</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div th:replace="fragmentos/fragmentos :: header"></div>
+
+    <div class="container">
+        <h2>Lista de alunos</h2>
+        <a href="/alunos/inserir"><button type="button" class="btn btn-primary">Criar novo aluno</button></a>
+        <table class="table" id="tbl-alunos">
+            <thead>
+                <th>Nome do Aluno</th>
+                <th>Idade</th>
+                <th>Instituição</th>
+                <th>Ações</th>
+            </thead>
+            <tbody>
+                <tr th:each="aluno: ${alunos}">
+                    <td th:text="${aluno.nome}"></td>
+                    <td th:text="${aluno.idade}"></td>
+                    <td th:text="${aluno.instituicao.nome}"></td>
+                    <td>
+                        <a th:href="@{/alunos/editar/{alunoId}(alunoId=${aluno.id})}">Editar |</a>
+                        <a th:href="@{/alunos/excluir/{alunoId}(alunoId=${aluno.id})}">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragmentos/fragmentos :: footer"></div>
+
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+</body>
+</html>

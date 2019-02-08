@@ -10,8 +10,15 @@
 
     <div class="container">
         <h2>Lista de instituições cadastradas</h2>
-        <a href="/instituicoes/inserir" class="btn btn-default">Criar nova instituição</a>
-        <table class="table">
+        <a href="/instituicoes/inserir"><button type="button" class="btn btn-primary">Criar nova instituição</button></a>
+        <div class="row">
+            <div class="form-group col-12">
+                <label for="txt-pesquisa-instituicao">Instituição a ser pesquisada:</label>
+                <input type="text" id="txt-pesquisa-instituicao" class="form-control"/>
+                <button type="button" class="btn btn-primary" id="btn-pesquisa-instituicao">Pesquisar</button>
+            </div>
+        </div>
+        <table class="table" id="tbl-instituicoes">
             <thead>
                 <th>Nome da instituição</th>
                 <th>Endereço</th>
@@ -22,8 +29,8 @@
                     <td th:text="${instituicao.nome}"></td>
                     <td th:text="${instituicao.endereco}"></td>
                     <td>
-                        <a th:href="@{/instituicoes/editar/{instituicaoId}(instituicaoId=${instituicao.id})">Editar</a>
-                        <a th:href="@{/instituicoes/excluir/{instituicaoId}(instituicaoId=${instituicao.id})">Excluir</a>
+                        <a th:href="@{/instituicoes/editar/{instituicaoId}(instituicaoId=${instituicao.id})}">Editar |</a>
+                        <a th:href="@{/instituicoes/excluir/{instituicaoId}(instituicaoId=${instituicao.id})}">Excluir</a>
                     </td>
                 </tr>
             </tbody>
@@ -32,6 +39,37 @@
 
     <div th:replace="fragmentos/fragmentos :: footer"></div>
 
-    <script rel="stylesheet" href="/webjars/jquery/3.1.1-1/jquery.min.js"></script>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script>
+        $(document).ready(() => {
+
+            $('#btn-pesquisa-instituicao').click(() => {
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/instituicoes/pesquisarPorNome/' + $('#txt-pesquisa-instituicao').val(),
+                    success: data => {
+                           $('#tbl-instituicoes tbody > tr').remove();
+                           data.forEach(instituicao => {
+                                $('#tbl-instituicoes tbody').append(
+                                '<tr>' +
+                                '   <td>' + instituicao.nome + '</td>' +
+                                '   <td>' + instituicao.endereco + '</td>' +
+                                '   <td>' +
+                                '       <a href="/instituicoes/editar/' +  instituicao.id + '">Editar</a> |' +
+                                '       <a href="/instituicoes/excluir/' +  instituicao.id + '">Excluir</a>' +
+                                '   </td>' +
+                                '</tr>'
+                                );
+                           });
+
+                    },
+                    error: () => {
+                        alert('Não foi possível executar a pesquisa');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
