@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <title>Spring Boot - Nova Instituição</title>
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div th:replace="fragmentos/fragmentos :: header"></div>
@@ -15,12 +16,26 @@
                 <div class="form-group col-6">
                     <label for="txt-nome">Nome da Instituição:</label>
                     <input type="text" class="form-control" id="txt-nome" th:field="*{nome}"/>
+                    <div class="row" th:if="${erros}">
+                        <ul>
+                            <li th:each="e : ${nome}">
+                                <span th:text="${e}"></span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-6">
                     <label for="txt-endereço">Endereço da Instituição:</label>
                     <input type="text" class="form-control" id="txt-endereço" th:field="*{endereco}"/>
+                    <div class="row" th:if="${erros}">
+                        <ul>
+                            <li th:each="e : ${endereco}">
+                                <span th:text="${e}"></span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Salvar!</button>
@@ -29,5 +44,6 @@
 
     <div th:replace="fragmentos/fragmentos :: footer"></div>
     <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

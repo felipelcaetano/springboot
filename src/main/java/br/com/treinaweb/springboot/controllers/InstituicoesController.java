@@ -5,11 +5,15 @@ import br.com.treinaweb.springboot.repositories.RepositorioInstituicao;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/instituicoes")
@@ -35,7 +39,13 @@ public class InstituicoesController {
     }
 
     @PostMapping("/inserir")
-    public String inserir(Instituicao instituicao) {
+    public String inserir(@Valid Instituicao instituicao, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("erros", true);
+            model.addAttribute("nome", result.getFieldErrors("nome").stream().map(fe -> fe.getDefaultMessage()).collect(Collectors.toList()));
+            model.addAttribute("endereco", result.getFieldErrors("endereco").stream().map(fe -> fe.getDefaultMessage()).collect(Collectors.toList()));
+            return "instituicao/inserir";
+        }
         repositorioInstituicao.save(instituicao);
         return "redirect:/instituicoes/index";
     }
@@ -49,7 +59,10 @@ public class InstituicoesController {
     }
 
     @PostMapping("/editar")
-    public String editar(Instituicao instituicao) {
+    public String editar(@Valid Instituicao instituicao, BindingResult result) {
+        if (result.hasErrors()) {
+            return "instituicoes/editar";
+        }
         repositorioInstituicao.save(instituicao);
         return "redirect:/instituicoes/index";
     }

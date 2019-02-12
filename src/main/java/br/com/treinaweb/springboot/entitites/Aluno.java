@@ -1,6 +1,7 @@
 package br.com.treinaweb.springboot.entitites;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 public class Aluno {
@@ -13,6 +14,10 @@ public class Aluno {
     private String nome;
 
     @Column
+    @NotNull(message = "Idade é obrigatória")
+    @NotEmpty(message = "Idade é obrigatória")
+    @Min(value = 16, message = "Idade mínima é 16 anos")
+    @Max(value = 100, message = "Idade máximo é 100 anos")
     private Integer idade;
 
     @ManyToOne(fetch = FetchType.LAZY)

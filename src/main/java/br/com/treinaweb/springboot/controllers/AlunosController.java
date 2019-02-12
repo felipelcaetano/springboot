@@ -6,9 +6,11 @@ import br.com.treinaweb.springboot.repositories.RepositorioAluno;
 import br.com.treinaweb.springboot.repositories.RepositorioInstituicao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +44,7 @@ public class AlunosController {
     }
 
     @PostMapping("/inserir")
-    public String inserir(Aluno aluno) {
+    public String inserir(@Valid Aluno aluno, BindingResult result) {
         repositorioAluno.save(aluno);
         return "redirect:/alunos/index";
     }
@@ -57,7 +59,7 @@ public class AlunosController {
     }
 
     @PostMapping("/editar")
-    public String editar(Aluno aluno) {
+    public String editar(@Valid Aluno aluno, BindingResult result) {
         repositorioAluno.save(aluno);
         return "redirect:/alunos/index";
     }
