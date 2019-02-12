@@ -15,7 +15,8 @@ public class Aluno {
     @Column
     private Integer idade;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instituicao_id", nullable = false)
     private Instituicao instituicao;
 
     public Long getId() {

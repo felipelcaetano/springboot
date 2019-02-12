@@ -16,9 +16,6 @@ public class Instituicao {
     @Column(length = 100)
     private String endereco;
 
-    @OneToMany(mappedBy = "instituicao")
-    private Set<Aluno> alunos;
-
     public Long getId() {
         return id;
     }
@@ -41,13 +38,5 @@ public class Instituicao {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
-    }
-
-    public Set<Aluno> getAlunos() {
-        return alunos;
-    }
-
-    public void setAlunos(Set<Aluno> alunos) {
-        this.alunos = alunos;
     }
 }

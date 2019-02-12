@@ -2,6 +2,7 @@ package br.com.treinaweb.springboot.controllers;
 
 import br.com.treinaweb.springboot.entitites.Instituicao;
 import br.com.treinaweb.springboot.repositories.RepositorioInstituicao;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -59,9 +60,9 @@ public class InstituicoesController {
         return "redirect:/instituicoes/index";
     }
 
-    @GetMapping({"/pesquisarPorNome/{nome}", "/pesquisarPorNome"})
-    public @ResponseBody List<Instituicao> pesquisarPorNome(@PathVariable Optional<String> nome) {
-        if(nome.isPresent()) {
+    @GetMapping("/pesquisarPorNome")
+    public @ResponseBody List<Instituicao> pesquisarPorNome(@RequestParam(required = false) Optional<String> nome) {
+        if(nome.isPresent() && Strings.isNotBlank(nome.get())) {
             return repositorioInstituicao.findByNomeContaining(nome.get());
         } else {
             return repositorioInstituicao.findAll();

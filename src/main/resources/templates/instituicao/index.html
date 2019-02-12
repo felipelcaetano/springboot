@@ -47,7 +47,7 @@
 
                 $.ajax({
                     method: 'GET',
-                    url: '/instituicoes/pesquisarPorNome/' + $('#txt-pesquisa-instituicao').val(),
+                    url: '/instituicoes/pesquisarPorNome?nome=' + $('#txt-pesquisa-instituicao').val(),
                     success: data => {
                            $('#tbl-instituicoes tbody > tr').remove();
                            data.forEach(instituicao => {
