@@ -15,12 +15,14 @@
                 <div class="form-group col-6">
                     <label for="txt-nome">Nome do Aluno:</label>
                     <input type="text" class="form-control" id="txt-nome" th:field="*{nome}"/>
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-6">
-                    <label for="txt-endereço">Idade do aluno:</label>
-                    <input type="number" class="form-control" id="txt-endereço" th:field="*{idade}"/>
+                    <label for="txt-idade">Idade do aluno:</label>
+                    <input type="number" class="form-control" id="txt-idade" th:field="*{idade}"/>
+                    <span th:if="${#fields.hasErrors('idade')}" th:errors="*{idade}"></span>
                 </div>
             </div>
             <div class="row">
@@ -30,6 +32,7 @@
                         <option th:each="instituicao: ${instituicoes}" th:text="${instituicao.nome}"
                                 th:value="${instituicao.id}"></option>
                     </select>
+                    <span th:if="${#fields.hasErrors('instituicao')}" th:errors="*{instituicao}"></span>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Salvar!</button>

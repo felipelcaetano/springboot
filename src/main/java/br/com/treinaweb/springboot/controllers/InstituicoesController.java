@@ -39,11 +39,8 @@ public class InstituicoesController {
     }
 
     @PostMapping("/inserir")
-    public String inserir(@Valid Instituicao instituicao, BindingResult result, Model model) {
+    public String inserir(@Valid Instituicao instituicao, BindingResult result) {
         if (result.hasErrors()) {
-            model.addAttribute("erros", true);
-            model.addAttribute("nome", result.getFieldErrors("nome").stream().map(fe -> fe.getDefaultMessage()).collect(Collectors.toList()));
-            model.addAttribute("endereco", result.getFieldErrors("endereco").stream().map(fe -> fe.getDefaultMessage()).collect(Collectors.toList()));
             return "instituicao/inserir";
         }
         repositorioInstituicao.save(instituicao);
@@ -59,9 +56,9 @@ public class InstituicoesController {
     }
 
     @PostMapping("/editar")
-    public String editar(@Valid Instituicao instituicao, BindingResult result) {
+    public String editar(@Valid Instituicao instituicao, BindingResult result ) {
         if (result.hasErrors()) {
-            return "instituicoes/editar";
+            return "instituicao/editar";
         }
         repositorioInstituicao.save(instituicao);
         return "redirect:/instituicoes/index";
@@ -73,10 +70,10 @@ public class InstituicoesController {
         return "redirect:/instituicoes/index";
     }
 
-    @GetMapping("/pesquisarPorNome")
-    public @ResponseBody List<Instituicao> pesquisarPorNome(@RequestParam(required = false) Optional<String> nome) {
-        if(nome.isPresent() && Strings.isNotBlank(nome.get())) {
-            return repositorioInstituicao.findByNomeContaining(nome.get());
+    @GetMapping(value = "/pesquisarPorNome", produces = "application/json")
+    public @ResponseBody List<Instituicao> pesquisarPorNome(@RequestParam(required = false, defaultValue = "") String nome) {
+        if(Strings.isNotBlank(nome)) {
+            return repositorioInstituicao.findByNomeContaining(nome);
         } else {
             return repositorioInstituicao.findAll();
         }

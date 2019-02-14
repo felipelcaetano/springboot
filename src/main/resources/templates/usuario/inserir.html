@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot - Novo usuário</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div th:replace="fragmentos/fragmentos :: header"></div>
+
+    <div class="container">
+        <h2>Criação de novo usuárioo</h2>
+        <form class="form-horizontal" action="/usuarios/inserir" method="post" th:object="${usuario}">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="txt-userName">Usuário:</label>
+                    <input type="text" class="form-control" id="txt-userName" th:field="*{userName}"/>
+                    <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="txt-password">Senha:</label>
+                    <input type="password" class="form-control" id="txt-password" th:field="*{password}"/>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="select-role">Perfil:</label>
+                    <select name="role" id="select-role" class="form-control">
+                        <option value="ROLE_ADMIN">Administrador</option>
+                        <option value="ROLE_USER">Usuário comum</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar!</button>
+        </form>
+    </div>
+
+    <div th:replace="fragmentos/fragmentos :: footer"></div>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

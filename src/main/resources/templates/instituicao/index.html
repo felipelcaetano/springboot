@@ -22,12 +22,14 @@
             <thead>
                 <th>Nome da instituição</th>
                 <th>Endereço</th>
+                <th>Data Cadastro</th>
                 <th>Ações</th>
             </thead>
             <tbody>
                 <tr th:each="instituicao: ${instituicoes}">
                     <td th:text="${instituicao.nome}"></td>
                     <td th:text="${instituicao.endereco}"></td>
+                    <td th:text="${#dates.format(instituicao.dataCriacao, 'dd/MM/yyyy hh:mm:ss')}"></td>
                     <td>
                         <a th:href="@{/instituicoes/editar/{instituicaoId}(instituicaoId=${instituicao.id})}">Editar |</a>
                         <a th:href="@{/instituicoes/excluir/{instituicaoId}(instituicaoId=${instituicao.id})}">Excluir</a>

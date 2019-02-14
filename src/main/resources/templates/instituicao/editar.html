@@ -16,12 +16,14 @@
                 <div class="form-group col-6">
                     <label for="txt-nome">Nome da Instituição:</label>
                     <input type="text" class="form-control" id="txt-nome" th:field="*{nome}"/>
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-6">
                     <label for="txt-endereco">Endereço da Instituição:</label>
                     <input type="text" class="form-control" id="txt-endereco" th:field="*{endereco}"/>
+                    <span th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></span>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Salvar!</button>

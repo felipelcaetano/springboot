@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot - Usuários</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div th:replace="fragmentos/fragmentos :: header"></div>
+
+    <div class="container">
+        <h2>Lista de usuários cadastrados</h2>
+        <a href="/usuarios/inserir"><button type="button" class="btn btn-primary">Criar novo usuário</button></a>
+        <div class="row">
+            <div class="form-group col-12">
+                <label for="txt-pesquisa-usuario">Usuário a ser pesquisado:</label>
+                <input type="text" id="txt-pesquisa-usuario" class="form-control"/>
+                <button type="button" class="btn btn-primary" id="btn-pesquisa-usuario">Pesquisar</button>
+            </div>
+        </div>
+        <table class="table" id="tbl-usuarios">
+            <thead>
+                <th>Usuário</th>
+                <th>Ações</th>
+            </thead>
+            <tbody>
+                <tr th:each="usuario: ${usuarios}">
+                    <td th:text="${usuario.userName}"></td>
+                    <td>
+                        <a th:href="@{/usuarios/excluir/{usuarioId}(usuarioId=${usuario.id})}">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragmentos/fragmentos :: footer"></div>
+
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script>
+        $(document).ready(() => {
+
+            $('#btn-pesquisa-usuario').click(() => {
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/usuarios/pesquisarPorNome?userName=' + $('#txt-pesquisa-usuario').val(),
+                    success: data => {
+                           $('#tbl-usuarios tbody > tr').remove();
+                           data.forEach(usuario => {
+                                $('#tbl-usuarios tbody').append(
+                                '<tr>' +
+                                '   <td>' + usuario.userName + '</td>' +
+                                '   <td>' +
+                                '       <a href="/usuarios/excluir/' +  usuario.id + '">Excluir</a>' +
+                                '   </td>' +
+                                '</tr>'
+                                );
+                           });
+
+                    },
+                    error: () => {
+                        alert('Não foi possível executar a pesquisa');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

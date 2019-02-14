@@ -8,19 +8,23 @@ public class Aluno {
 
     @Id
     @GeneratedValue
+    @Column(name = "aluno_id")
     private Long id;
 
     @Column(length = 50)
+    @NotNull(message = "Nome é obrigatório")
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 3, max = 100, message = "Nome tem que ter entre 3 e 100 caracteres")
     private String nome;
 
     @Column
     @NotNull(message = "Idade é obrigatória")
-    @NotEmpty(message = "Idade é obrigatória")
     @Min(value = 16, message = "Idade mínima é 16 anos")
     @Max(value = 100, message = "Idade máximo é 100 anos")
     private Integer idade;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "Instituição é obrigatória")
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "instituicao_id", nullable = false)
     private Instituicao instituicao;
 

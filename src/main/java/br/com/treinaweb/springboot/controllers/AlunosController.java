@@ -6,6 +6,7 @@ import br.com.treinaweb.springboot.repositories.RepositorioAluno;
 import br.com.treinaweb.springboot.repositories.RepositorioInstituicao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,7 +45,11 @@ public class AlunosController {
     }
 
     @PostMapping("/inserir")
-    public String inserir(@Valid Aluno aluno, BindingResult result) {
+    public String inserir(@Valid Aluno aluno, BindingResult result, Model model) {
+        if(result.hasErrors()) {
+            model.addAttribute("instituicoes", repositorioInstituicao.findAll());
+            return "aluno/inserir";
+        }
         repositorioAluno.save(aluno);
         return "redirect:/alunos/index";
     }
@@ -59,7 +64,11 @@ public class AlunosController {
     }
 
     @PostMapping("/editar")
-    public String editar(@Valid Aluno aluno, BindingResult result) {
+    public String editar(@Valid Aluno aluno, BindingResult result, Model model) {
+        if(result.hasErrors()) {
+            model.addAttribute("instituicoes", repositorioInstituicao.findAll());
+            return "aluno/editar";
+        }
         repositorioAluno.save(aluno);
         return "redirect:/alunos/index";
     }
